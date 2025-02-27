@@ -1,6 +1,7 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
 from rest_framework.viewsets import ModelViewSet
+from rest_framework import generics
 from rest_framework.generics import (
     CreateAPIView,
     ListAPIView,
@@ -63,7 +64,7 @@ class PaymentViewSet(viewsets.ModelViewSet):
     serializer_class = PaymentSerializer
 
 
-class PaymentListView(ListCreateAPIView):
+class PaymentListView(generics.ListCreateAPIView):
     queryset = Payment.objects.all()
     serializer_class = PaymentSerializer
     filter_backends = [DjangoFilterBackend]

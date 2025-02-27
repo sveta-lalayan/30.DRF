@@ -1,5 +1,7 @@
 import os
 from pathlib import Path
+
+import django_filters.rest_framework
 from dotenv import load_dotenv
 
 load_dotenv(override=True)
@@ -26,6 +28,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'users',
     'courses',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -58,9 +61,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS':['django_filters.rest_framework.DjangoFilterBackend']
+}
 
 DATABASES = {
     'default': {
@@ -94,8 +97,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 

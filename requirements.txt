@@ -5,3 +5,4 @@ python-dotenv==1.0.1
 pillow==11.1.0
 django-filter==25.1
 
+
