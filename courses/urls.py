@@ -13,7 +13,7 @@ from courses.views import (
 app_name = "courses"
 
 router = SimpleRouter()
-router.register(r"", CourseViewSet)  # Регистрируем маршруты для курса
+router.register(r"", CourseViewSet)
 
 urlpatterns = [
     path(
