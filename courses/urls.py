@@ -8,12 +8,13 @@ from courses.views import (
     LessonUpdateApiView,
     LessonDestroyApiView,
     PaymentListView,
+    SubscriptionView, CoursePaymentCreateAPIView,
 )
 
 app_name = "courses"
 
 router = SimpleRouter()
-router.register(r"", CourseViewSet)
+router.register(r"", CourseViewSet)  # Регистрируем маршруты для курса
 
 urlpatterns = [
     path(
@@ -40,8 +41,13 @@ urlpatterns = [
         name="lessons_update",
     ),
     path("payments/", PaymentListView.as_view(), name="payment-list"),
+    path("<int:course_id>/subscriptions/", SubscriptionView.as_view(), name="subscription_view"),
+    path(
+        "<int:course_id>/payment/", CoursePaymentCreateAPIView.as_view(), name="course_payment"
+    ),
+
     path("", include(router.urls)),
 ]
 
-
+# Включаем маршруты из роутера для курсов
 urlpatterns += router.urls
