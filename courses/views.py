@@ -25,8 +25,9 @@ from courses.serializers import (
     CourseDetailSerializer,
     PaymentSerializer,
 )
-from courses.services import  create_session
+from courses.services import create_session
 from users.permissions import IsModer, IsOwner, IsOwnerAndNotModer
+from courses.tasks import send_info
 
 
 class CourseViewSet(ModelViewSet):
@@ -55,6 +56,16 @@ class CourseViewSet(ModelViewSet):
             )
 
         return super().get_permissions()
+
+    def perform_update(self, serializer):
+        course = serializer.save()
+
+        emails = []
+        subscriptions = Subscription.objects.filter(course=course)
+        for s in subscriptions:
+            emails.append(s.user.email)
+
+        send_info.delay(course.id, emails, f'Изменен курс {course.title}')
 
 
 class LessonCreateApiView(CreateAPIView):
@@ -108,20 +119,21 @@ class CoursePaymentCreateAPIView(CreateAPIView):
     queryset = Payment.objects.all()
 
     def perform_create(self, serializer):
-        course_id = self.kwargs.get('course_id')
+        course_id = self.kwargs.get("course_id")
         course = Course.objects.get(id=course_id)
         payment = serializer.save(user=self.request.user, paid_course=course)
 
         try:
             course_name = course.title
-            session_id, payment_link = create_session(payment.payment_amount, f'к оплате {course_name}')
+            session_id, payment_link = create_session(
+                payment.payment_amount, f"к оплате {course_name}"
+            )
             payment.session_id = session_id
             payment.payment_link = payment_link
             payment.save()
         except stripe.error.StripeError as e:
             print(f"Ошибка при создании сессии Stripe: {e}")
             raise
-
 
 
 class SubscriptionView(APIView):
