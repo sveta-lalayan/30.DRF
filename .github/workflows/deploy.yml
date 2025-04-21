@@ -1,8 +1,7 @@
 name: Deploy DRF App
 
-on:
-  push:
-    branches: [ main ]
+on: push
+
 
 jobs:
   test:
@@ -37,3 +36,5 @@ jobs:
           cd /var/www/30
           git pull origin main
           docker compose up -d --build
+
+
