@@ -1,23 +1,12 @@
-# FROM python:3.12-slim
-#
-# WORKDIR /app
-#
-# COPY /requirements.txt /
-#
-# RUN pip install -r /requirements.txt --no-cache-dir
-#
-#
-# COPY . .
+FROM python:3.12-slim
+
+WORKDIR /app
+
+COPY /requirements.txt /
+
+RUN pip install -r /requirements.txt --no-cache-dir
 
 
-# Используем официальный образ Nginx
-FROM nginx:latest
+COPY . .
 
-# Копируем файл конфигурации Nginx в контейнер
-COPY nginx.conf /etc/nginx/nginx.conf
 
-# Копируем статические файлы веб-сайта в директорию для обслуживания
-COPY html/ /usr/share/nginx/html/
-
-# Открываем порт 80 для HTTP-трафика
-EXPOSE 80
