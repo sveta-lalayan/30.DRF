@@ -73,6 +73,16 @@ REST_FRAMEWORK = {
     ],
 }
 
+
+
+
+if "test" in sys.argv:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "test_db/sqlite3",
+        }
+    }
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -83,6 +93,7 @@ DATABASES = {
         "PASSWORD": os.getenv("PASSWORD"),
     }
 }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
