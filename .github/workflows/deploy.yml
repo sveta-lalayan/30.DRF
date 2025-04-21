@@ -60,11 +60,11 @@ jobs:
       - name: Deploy to Server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-#          sudo lsof -ti :80 | xargs -r sudo kill -9 2>/dev/null || true
-#          docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }}
-#          docker pull svetalalayan/myapp:latest
-#          docker stop myapp  true
-#          docker rm myapp  true
-#          docker run -d --name myapp -p 80:8000 ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }}
+          sudo lsof -ti :80 | xargs -r sudo kill -9 2>/dev/null || true
+          docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }}
+          docker pull svetalalayan/myapp:latest
+          docker stop myapp  true
+          docker rm myapp  true
+          docker run -d --name myapp -p 80:8000 ${{ secrets.DOCKER_HUB_USERNAME }}/myapp:${{ github.sha }}
           EOF
 
