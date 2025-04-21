@@ -86,9 +86,9 @@ if "test" in sys.argv:
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("NAME"),
+        "POSTGRES_DB": os.getenv("NAME"),
         "POSTGRES_USER": "postgres",
-        "POSTGRES_HOST": "localhost",
+        "POSTGRES_HOST": "db",
         "PORT": "5432",
         "POSTGRES_PASSWORD": os.getenv("POSTGRES_PASSWORD"),
     }
