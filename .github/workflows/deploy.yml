@@ -32,7 +32,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Connect to server & deploy
-      uses: appleboy/ssh-action@v1
+      uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_KEY }}
       with:
         host: ${{ secrets.SERVER_IP }}
         username: ${{ secrets.SERVER_USER }}
